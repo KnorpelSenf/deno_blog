@@ -217,7 +217,12 @@ async function watchForChanges(postsDirectory: string) {
             if (err instanceof Deno.errors.NotFound) {
               POSTS.delete(("/" + relative(postsDirectory, path)).slice(0, -3));
             } else {
-              console.error(`loadPost ${path} error:`, err.message);
+              console.error(
+                `loadPost ${path} error:`,
+                typeof err === "object" && err !== null && "message" in err
+                  ? err.message
+                  : err,
+              );
             }
           } finally {
             HMR_SOCKETS.forEach((socket) => {
