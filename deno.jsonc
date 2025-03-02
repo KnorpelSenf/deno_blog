@@ -1,4 +1,10 @@
 {
+  "name": "@knorpelsenf/deno-blog",
+  "version": "0.8.0",
+  "exports": {
+    "./blog": "./blog.tsx",
+    "./init": "./init.ts"
+  },
   "lock": false,
   "tasks": {
     "demo": "deno run  --allow-net --allow-read --allow-env --watch --no-check testdata/my_blog.ts --dev",
