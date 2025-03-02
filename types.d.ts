@@ -1,6 +1,6 @@
 // Copyright 2022 the Deno authors. All rights reserved. MIT license.
 
-import { type VNode } from "htm/html.tsx";
+import type { VNode } from "preact";
 import UnoCSS from "htm/plugins/unocss.ts";
 
 export interface BlogContext {

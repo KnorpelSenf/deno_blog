@@ -5,13 +5,14 @@
 import * as gfm from "@deno/gfm";
 import { pooledMap } from "@std/async";
 import { extractYaml as frontMatter } from "@std/front-matter";
-import { walk, WalkEntry } from "@std/fs";
+import { walk, type WalkEntry } from "@std/fs";
 import { serveDir } from "@std/http";
 import { dirname, fromFileUrl, join, relative } from "@std/path";
 import callsites from "callsites";
 import { Feed, type Item as FeedItem } from "feed";
 import { createReporter } from "ga";
-import html, { Fragment, h, HtmlOptions } from "htm/html.tsx";
+import html, { type HtmlOptions } from "htm/html.tsx";
+import { Fragment, h } from "htm/jsx.ts";
 import ColorScheme from "htm/plugins/color-scheme.ts";
 import UnoCSS from "htm/plugins/unocss.ts";
 import removeMarkdown from "remove-markdown";
@@ -102,7 +103,12 @@ export default async function blog(settings?: BlogSettings) {
   }, blogHandler);
 }
 
-export function createBlogHandler(state: BlogState) {
+export function createBlogHandler(
+  state: BlogState,
+): (
+  req: Request,
+  connInfo: Deno.ServeHandlerInfo,
+) => Response | Promise<Response> {
   const inner = handler;
   const withMiddlewares = composeMiddlewares(state);
   return function handler(req: Request, connInfo: Deno.ServeHandlerInfo) {
@@ -292,7 +298,7 @@ async function loadPost(postsDirectory: string, path: string) {
 export async function handler(
   req: Request,
   ctx: BlogContext,
-) {
+): Promise<Response> {
   const { state: blogState } = ctx;
   const { pathname, searchParams } = new URL(req.url);
   const canonicalUrl = blogState.canonicalUrl || new URL(req.url).origin;

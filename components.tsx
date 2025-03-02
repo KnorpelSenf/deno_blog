@@ -3,7 +3,8 @@
 /** @jsx h */
 
 import * as gfm from "@deno/gfm";
-import { h } from "htm/html.tsx";
+// deno-lint-ignore verbatim-module-syntax
+import { h } from "htm/jsx.ts";
 import type { BlogState, DateFormat, Post } from "./types.d.ts";
 
 const socialAppIcons = new Map([
@@ -253,14 +254,14 @@ function Footer(_props: { author?: string }) {
   );
 }
 
-function Tooltip({ children }: { children: string }) {
+function Tooltip({ children }: { children?: JSX.Element | JSX.Element[] }) {
   return (
     <div
       className={"absolute top-10 px-3 h-8 !leading-8 bg-black/80 text-white text-sm rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity"}
     >
       <span
         className="block absolute text-black/80"
-        style={{ top: -4, left: "50%", marginLeft: -4.5, width: 9, height: 4 }}
+        style={{ top: "-4", left: "50%", marginLeft: "-4.5", width: "9", height: "4" }}
       >
         <svg
           className="absolute"
